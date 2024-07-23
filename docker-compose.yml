@@ -1,0 +1,41 @@
+services:
+  app:
+    image: php:8.1-fpm
+    container_name: moviement_app
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - ./php.ini:/usr/local/etc/php/conf.d/php.ini
+    networks:
+      - laravel
+    entrypoint: /bin/bash -c "apt-get update && apt-get install -y git && docker-php-entrypoint php-fpm"
+
+
+  web:
+    image: nginx:alpine
+    container_name: moviement_web
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "8080:80"
+    networks:
+      - laravel
+
+  db:
+    image: mysql:5.7
+    container_name: moviement_db
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: secret
+    ports:
+      - "3306:3306"
+    networks:
+      - laravel
+
+networks:
+  laravel:
+    driver: bridge
