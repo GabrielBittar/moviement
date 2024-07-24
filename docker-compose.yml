@@ -8,8 +8,7 @@ services:
       - ./php.ini:/usr/local/etc/php/conf.d/php.ini
     networks:
       - laravel
-    entrypoint: /bin/bash -c "apt-get update && apt-get install -y git && docker-php-entrypoint php-fpm"
-
+    entrypoint: /bin/bash -c "apt-get update && apt-get install -y git nodejs npm && curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer && docker-php-entrypoint php-fpm"
 
   web:
     image: nginx:alpine
