@@ -10,13 +10,9 @@ class TMDbService
     protected $client;
     protected $apiKey;
 
-    public function __construct()
+    public function __construct(Client $client)
     {
-        $this->client = new Client([
-            'base_uri' => 'https://api.themoviedb.org/3/',
-            'timeout'  => 5.0,
-        ]);
-
+        $this->client = $client;
         $this->apiKey = env('TMDB_API_KEY');
     }
 
