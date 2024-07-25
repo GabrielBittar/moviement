@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\Profile;
+use App\Models\Movie;
 
 class ProfileController extends Controller
 {
@@ -35,6 +37,35 @@ class ProfileController extends Controller
         $request->user()->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    }
+
+    public function createProfile(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        if (auth()->user()->profiles()->count() >= 4) {
+            return back()->withErrors(['message' => 'You can have up to 4 profiles.']);
+        }
+
+        auth()->user()->profiles()->create(['name' => $request->name]);
+
+        return redirect()->route('profiles.index');
+    }
+
+    public function markAsWatched(Profile $profile, Movie $movie)
+    {
+        $profile->movies()->updateExistingPivot($movie->id, ['watched' => true]);
+
+        return back()->with('success', 'Movie marked as watched!');
+    }
+
+    public function markAsUnwatched(Profile $profile, Movie $movie)
+    {
+        $profile->movies()->updateExistingPivot($movie->id, ['watched' => false]);
+
+        return back()->with('success', 'Movie marked as unwatched!');
     }
 
     /**
