@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TMDBController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +16,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('landing');
+// });
+
+Route::get('/', [LandingController::class, 'index'])->name('landing');
+
+Route::get('/movies/search', [TMDBController::class, 'tmdbSearchMovies'])->name('movies.search');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

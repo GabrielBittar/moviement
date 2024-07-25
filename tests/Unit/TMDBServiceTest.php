@@ -3,7 +3,7 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
-use App\Services\TMDbService;
+use App\Services\TMDBService;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Exception\RequestException;
@@ -19,7 +19,7 @@ class TMDBServiceTest extends TestCase
         parent::setUp();
 
         $this->mockClient = Mockery::mock(Client::class);
-        $this->tmdbService = new TMDbService($this->mockClient);
+        $this->tmdbService = new TMDBService($this->mockClient);
     }
 
     public function testSearchMoviesSuccess()

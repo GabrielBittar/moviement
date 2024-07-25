@@ -3,7 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Services\TMDbService;
+use App\Services\TMDBService;
+use GuzzleHttp\Client;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -12,13 +13,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(TMDbService::class, function ($app) {
+        $this->app->singleton(TMDBService::class, function ($app) {
             $client = new Client([
                 'base_uri' => 'https://api.themoviedb.org/3/',
                 'timeout'  => 5.0,
             ]);
 
-            return new TMDbService($client);
+            return new TMDBService($client);
         });
     }
 

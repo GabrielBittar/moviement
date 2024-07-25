@@ -5,7 +5,7 @@ namespace App\Services;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 
-class TMDbService
+class TMDBService
 {
     protected $client;
     protected $apiKey;
@@ -28,7 +28,20 @@ class TMDbService
 
             return json_decode($response->getBody()->getContents(), true);
         } catch (RequestException $e) {
-            // Handle exception
+            return ['error' => $e->getMessage()];
+        }
+    }
+    public function getPopularMovies()
+    {
+        try {
+            $response = $this->client->request('GET', 'movie/popular', [
+                'query' => [
+                    'api_key' => $this->apiKey,
+                ]
+            ]);
+
+            return json_decode($response->getBody()->getContents(), true);
+        } catch (RequestException $e) {
             return ['error' => $e->getMessage()];
         }
     }
