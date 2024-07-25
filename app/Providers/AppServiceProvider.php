@@ -13,7 +13,12 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(TMDbService::class, function ($app) {
-            return new TMDbService();
+            $client = new Client([
+                'base_uri' => 'https://api.themoviedb.org/3/',
+                'timeout'  => 5.0,
+            ]);
+
+            return new TMDbService($client);
         });
     }
 
