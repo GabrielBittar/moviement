@@ -17,7 +17,7 @@ class TMDbService
             'timeout'  => 5.0,
         ]);
 
-        $this->apiKey = env('TMDB_API_KEY'); // Certifique-se de adicionar isso no .env
+        $this->apiKey = env('TMDB_API_KEY');
     }
 
     public function searchMovies($query)
