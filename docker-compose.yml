@@ -6,6 +6,7 @@ services:
     volumes:
       - ./:/var/www
       - ./php.ini:/usr/local/etc/php/conf.d/php.ini
+      - ./www.conf:/usr/local/etc/php-fpm.d/www.conf
     networks:
       - laravel
     entrypoint: /bin/bash -c "apt-get update && \

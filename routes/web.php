@@ -20,7 +20,7 @@ use App\Http\Controllers\TMDBController;
 //     return view('landing');
 // });
 
-Route::get('/', [LandingController::class, 'index'])->name('landing');
+Route::get('/', [LandingController::class, 'index'])->name('index');
 
 Route::get('/movies/search', [TMDBController::class, 'tmdbSearchMovies'])->name('movies.search');
 

@@ -16,6 +16,6 @@ class LandingController extends Controller
     public function index()
     {
         $movies = $this->tmdbService->getPopularMovies();
-        return view('landing', ['movies' => $movies]);
+        return view('index', ['movies' => $movies]);
     }
 }
